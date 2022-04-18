@@ -19,14 +19,15 @@ public class Graph1L<T> {
     private Object classType;
 
     /**
-     *
-     * @param type
+     * Empty constructor new representation.
      */
     private void createNewRep() {
         this.rep = new Map1L<>();
     }
 
     /**
+     * Creating a new representation while noting what string of T is during
+     * run-time.
      *
      * @param object
      */
@@ -36,14 +37,18 @@ public class Graph1L<T> {
     }
 
     /**
-     *
+     * Empty constructor.
      */
     public Graph1L() {
         this.createNewRep();
     }
 
     /**
+     * Constructor with the explicit type stated.
+     *
      * @param object
+     *            arbitrary object passed in that will not be used, only to note
+     *            what string of T is during run-time.
      */
     public Graph1L(T object) {
         this.createNewRep(object);
