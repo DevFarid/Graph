@@ -1,3 +1,5 @@
+import java.util.Set;
+
 /**
  * Implementation of Graph.
  *
@@ -8,7 +10,8 @@
 public interface Graph<T> extends GraphKernel<T> {
 
     /**
-     * Creates an edges between two vertices.
+     * Creates an edges between two vertices. Connects {@code vertexOne} to
+     * {@code vertexTwo}
      *
      * @param vertexOne
      *            the vertex that will be adjacent to {@code vertexTwo}.
@@ -45,5 +48,11 @@ public interface Graph<T> extends GraphKernel<T> {
      *         {@code vertexTwo}.
      */
     boolean isAdjacent(T vertexOne, T vertexTwo);
+
+    /**
+     *
+     * @return internal representation of class extending this.
+     */
+    java.util.Map<T, Set<T>> getRep();
 
 }

@@ -46,7 +46,7 @@ public interface GraphKernel<T> extends Standard<Graph<T>>, Iterable<T> {
      * @requires entries({@code vertices} is in entries(this)
      * @ensures {@code vertex} is adjacent to entries({@code vertices})
      */
-    void add(components.set.Set<T> vertices, T vertex);
+    void add(java.util.Set<T> vertices, T vertex);
 
     /**
      * Removes a vertex from the graph.
