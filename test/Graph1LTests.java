@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -145,10 +146,27 @@ public final class Graph1LTests {
 
         q.connect(5, 6);
 
-        System.out.println(q.getRep().keySet().toString() + "<"
-                + q.getRep().values() + ">");
         tearDown();
         assertEquals(qExpected, q.getRep());
+    }
+    
+    @Test
+    public void testAdjacency() {
+        setUp();
+        Graph<Integer> q = this.createVerticesFromArgs(5, 6);
+        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6);
+
+        this.connectVertices(5, 6);
+        
+        Set<Integer> v1 = qExpected.get(5);
+        Set<Integer> v2 = qExpected.get(6);
+
+        q.connect(5, 6);
+        
+        tearDown();
+        assertTrue(v1.contains(6));
+        assertTrue(v2.contains(5));
+        assertTrue(q.isAdjacent(5, 6));
     }
 
     @Test

@@ -1,4 +1,3 @@
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,7 +7,7 @@ import java.util.Set;
 
 /**
  *
- * @author Farid2k & R.E.M.O
+ * s@author Farid2k & R.E.M.O
  *
  * @param <T>
  */
@@ -17,10 +16,6 @@ public class Graph1L<T> extends GraphSecondary<T> {
      *
      */
     private java.util.Map<T, Set<T>> rep;
-    /**
-     *
-     */
-    private java.util.Set<T> emptySet = Collections.emptySet();
 
     /**
      * Empty constructor new representation.
@@ -73,12 +68,15 @@ public class Graph1L<T> extends GraphSecondary<T> {
         assert (this.contains(
                 vertexTwo)) : "Violation of: vertexTwo is not in this";
 
-        return false;
+        Set<T> v1 = this.rep.get(vertexOne);
+        Set<T> v2 = this.rep.get(vertexTwo);
+        
+        return v1.contains(vertexTwo) && v2.contains(vertexOne);
     }
 
     @Override
     public void add(T vertex) {
-        assert (!this.contains(vertex)) : "Violation of: vertex is in this";
+        assert (!this.contains(vertex)) : "Violation of: vertex is not in this";
 
         java.util.Set<T> degreeSet = new HashSet<>();
         this.rep.put(vertex, degreeSet);
@@ -87,13 +85,35 @@ public class Graph1L<T> extends GraphSecondary<T> {
 
     @Override
     public void add(T vertexOne, T vertexTwo) {
-        // TODO Auto-generated method stub
-
+        assert (!this.contains(vertexOne)) : "Violation of: vertexOne is not in this";
+        assert (!this.contains(vertexTwo)) : "Violation of: vertexTwo is not in this";
+    	
+        java.util.Set<T> v1 = new HashSet<>();
+        java.util.Set<T> v2 = new HashSet<>();
+        
+        this.rep.put(vertexOne, v1);
+        this.rep.put(vertexTwo, v2);
+        
+        this.connect(vertexOne, vertexTwo);
+        
     }
 
     @Override
     public void add(Set<T> vertices, T vertex) {
-        // TODO Auto-generated method stub
+    	assert (!this.contains(vertex)) : "Violation of: vertex is not in this";
+        for (T v : vertices) {
+        	if(!this.contains(v)) {
+        		throw new AssertionError("Violation of: vertex in Set<T> is in this.");
+        	}
+        }
+        
+
+        java.util.Set<T> vSet = new HashSet<>();
+        this.rep.put(vertex, vSet);
+        
+        for(T v : vertices) {
+        	this.connect(vertex, v);
+        }
 
     }
 
