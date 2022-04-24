@@ -1,5 +1,6 @@
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -19,7 +20,7 @@ public class Graph1L<T> extends GraphSecondary<T> {
     /**
      *
      */
-    private final java.util.Set<T> emptySet = Collections.emptySet();
+    private java.util.Set<T> emptySet = Collections.emptySet();
 
     /**
      * Empty constructor new representation.
@@ -42,16 +43,18 @@ public class Graph1L<T> extends GraphSecondary<T> {
         assert (this.contains(
                 vertexTwo)) : "Violation of: vertexTwo is not in this";
 
+        Set<T> values;
+
         for (Map.Entry<T, Set<T>> mapEntry : this.rep.entrySet()) {
             if (mapEntry.getKey().equals(vertexOne)) {
-                Set<T> vals = mapEntry.getValue();
-                vals.add(vertexTwo);
-                mapEntry.setValue(vals);
+                values = mapEntry.getValue();
+                values.add(vertexTwo);
+                mapEntry.setValue(values);
             }
             if (mapEntry.getKey().equals(vertexTwo)) {
-                Set<T> vals = mapEntry.getValue();
-                vals.add(vertexOne);
-                mapEntry.setValue(vals);
+                values = mapEntry.getValue();
+                values.add(vertexOne);
+                mapEntry.setValue(values);
             }
         }
 
@@ -77,7 +80,8 @@ public class Graph1L<T> extends GraphSecondary<T> {
     public void add(T vertex) {
         assert (!this.contains(vertex)) : "Violation of: vertex is in this";
 
-        this.rep.put(vertex, this.emptySet);
+        java.util.Set<T> degreeSet = new HashSet<>();
+        this.rep.put(vertex, degreeSet);
 
     }
 

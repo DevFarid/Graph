@@ -1,8 +1,9 @@
 import static org.junit.Assert.assertEquals;
 
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.junit.Test;
@@ -19,7 +20,31 @@ public final class Graph1LTests {
     /**
      *
      */
-    private Stopwatch1 timer = new Stopwatch1();
+    private static Stopwatch1 timer = new Stopwatch1();
+    private static Map<Integer, Set<Integer>> g = new HashMap<>();
+
+    /**
+     *
+     */
+    private static void setUp() {
+        timer.start();
+    }
+
+    /**
+     *
+     */
+    private static void tearDown() {
+        timer.stop();
+    }
+
+    /**
+     *
+     * @return return the time duration of a test.
+     */
+    private static Double duration() {
+        double elapsed = timer.elapsed() / 1000.00;
+        return elapsed;
+    }
 
     /**
      * Constructs and returns a sequence of the integers provided as arguments.
@@ -49,14 +74,41 @@ public final class Graph1LTests {
      * @requires [every entry in args is unique]
      * @ensures createFromArgsTest = [entries in args]
      */
-    private Map<Object, Set<Object>> createFromArgsTest(Integer... args) {
-        Map<Object, Set<Object>> g = new HashMap<>();
+    private Map<Integer, Set<Integer>> createFromArgsTest(Integer... args) {
+        g.clear();
         for (Integer x : args) {
             assert !g.containsKey(
                     x) : "Violation of: every entry in args is unique";
-            g.put(x, Collections.emptySet());
+            g.put(x, new HashSet<Integer>());
         }
         return g;
+    }
+
+    /**
+     *
+     * @param vertexOne
+     * @param vertexTwo
+     */
+    private void connectVertices(Integer vertexOne, Integer vertexTwo) {
+        assert (g
+                .containsKey(vertexOne)) : "Violation of: vertexOne is in this";
+        assert (g
+                .containsKey(vertexTwo)) : "Violation of: vertexTwo is in this";
+
+        for (Entry<Integer, Set<Integer>> mapEntry : g.entrySet()) {
+
+            Set<Integer> degreeSet = new HashSet<>(mapEntry.getValue());
+
+            if (mapEntry.getKey().equals(vertexOne)) {
+                degreeSet.add(vertexTwo);
+                mapEntry.setValue(degreeSet);
+            } else if (mapEntry.getKey().equals(vertexTwo)) {
+                degreeSet.add(vertexOne);
+                mapEntry.setValue(degreeSet);
+            }
+
+        }
+
     }
 
     /**
@@ -67,9 +119,9 @@ public final class Graph1LTests {
         /*
          * Set up variables
          */
-        this.timer.start();
+        setUp();
         Graph<Integer> q = new Graph1L<>();
-        Map<Object, Set<Object>> qExpected = this.createFromArgsTest(5);
+        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5);
         /*
          * Call method under test
          */
@@ -77,12 +129,33 @@ public final class Graph1LTests {
         /*
          * Assert that values of variables match expectations
          */
-        this.timer.stop();
-        double elapsed = this.timer.elapsed() / 1000.00;
-        System.out.println("testAddEmpty() took " + elapsed + " sec(s).");
-        System.out.println(qExpected.toString());
+        tearDown();
+        System.out.println("testAddEmpty() took " + duration() + " sec(s).");
         assertEquals(qExpected, q.getRep());
 
     }
 
+    @Test
+    public void testConnectEmpty() {
+        setUp();
+        Graph<Integer> q = this.createVerticesFromArgs(5, 6);
+        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6);
+
+        this.connectVertices(5, 6);
+
+        q.connect(5, 6);
+
+        System.out.println(q.getRep().keySet().toString() + "<"
+                + q.getRep().values() + ">");
+        tearDown();
+        assertEquals(qExpected, q.getRep());
+    }
+
+    @Test
+    public void testTemplate() {
+        setUp();
+        Graph<Integer> q = new Graph1L<>();
+        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest();
+        tearDown();
+    }
 }
