@@ -57,7 +57,7 @@ public interface GraphKernel<T> extends Standard<Graph<T>>, Iterable<T> {
      * @ensures this = #this \ {@code vertex}
      * @return the vertex removed.
      */
-    T remove(T vertex);
+    boolean remove(T vertex);
 
     /**
      * Returns the total n amount of vertices that exist in this.

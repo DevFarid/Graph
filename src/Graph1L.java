@@ -57,7 +57,15 @@ public class Graph1L<T> extends GraphSecondary<T> {
 
     @Override
     public void disconnect(T vertexOne, T vertexTwo) {
-        // TODO Auto-generated method stub
+        assert (this
+                .contains(vertexOne)) : "Violation of: vertexOne is in this";
+        assert (this
+                .contains(vertexOne)) : "Violation of: vertexTwo is in this";
+        assert (this.isAdjacent(vertexOne,
+                vertexTwo)) : "Violation of: vertexOne is adjacent to vertexTwo";
+
+        this.rep.get(vertexOne).remove(vertexTwo);
+        this.rep.get(vertexTwo).remove(vertexOne);
 
     }
 
@@ -70,7 +78,7 @@ public class Graph1L<T> extends GraphSecondary<T> {
 
         Set<T> v1 = this.rep.get(vertexOne);
         Set<T> v2 = this.rep.get(vertexTwo);
-        
+
         return v1.contains(vertexTwo) && v2.contains(vertexOne);
     }
 
@@ -85,52 +93,54 @@ public class Graph1L<T> extends GraphSecondary<T> {
 
     @Override
     public void add(T vertexOne, T vertexTwo) {
-        assert (!this.contains(vertexOne)) : "Violation of: vertexOne is not in this";
-        assert (!this.contains(vertexTwo)) : "Violation of: vertexTwo is not in this";
-    	
+        assert (!this.contains(
+                vertexOne)) : "Violation of: vertexOne is not in this";
+        assert (!this.contains(
+                vertexTwo)) : "Violation of: vertexTwo is not in this";
+
         java.util.Set<T> v1 = new HashSet<>();
         java.util.Set<T> v2 = new HashSet<>();
-        
+
         this.rep.put(vertexOne, v1);
         this.rep.put(vertexTwo, v2);
-        
+
         this.connect(vertexOne, vertexTwo);
-        
+
     }
 
     @Override
     public void add(Set<T> vertices, T vertex) {
-    	assert (!this.contains(vertex)) : "Violation of: vertex is not in this";
+        assert (!this.contains(vertex)) : "Violation of: vertex is not in this";
         for (T v : vertices) {
-        	if(!this.contains(v)) {
-        		throw new AssertionError("Violation of: vertex in Set<T> is in this.");
-        	}
+            if (!this.contains(v)) {
+                throw new AssertionError(
+                        "Violation of: vertex in Set<T> is in this.");
+            }
         }
-        
 
         java.util.Set<T> vSet = new HashSet<>();
         this.rep.put(vertex, vSet);
-        
-        for(T v : vertices) {
-        	this.connect(vertex, v);
+
+        for (T v : vertices) {
+            this.connect(vertex, v);
         }
 
     }
 
     @Override
     public boolean remove(T vertex) {
-    	assert (this.contains(vertex)) : "Violation of: vertex is in this";
+        assert (this.contains(vertex)) : "Violation of: vertex is in this";
         boolean operation = false;
-    	
-    	Set<T> valSet = this.rep.remove(vertex);
-    	for(T v : valSet) {
-    		Set<T> innerValSet = this.rep.get(v);
-    		if(innerValSet.contains(vertex)) {
-    			operation = innerValSet.remove(vertex);
-    		}
-    	}
-    	
-    	return operation;
+
+        Set<T> valSet = this.rep.remove(vertex);
+        for (T v : valSet) {
+            Set<T> innerValSet = this.rep.get(v);
+            if (innerValSet.contains(vertex)) {
+                operation = innerValSet.remove(vertex);
+            }
+        }
+
+        return operation;
     }
 
     @Override

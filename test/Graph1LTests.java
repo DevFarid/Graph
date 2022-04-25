@@ -147,9 +147,11 @@ public final class Graph1LTests {
         q.connect(5, 6);
 
         tearDown();
+        System.out
+                .println("testConnectEmpty() took " + duration() + " sec(s).");
         assertEquals(qExpected, q.getRep());
     }
-    
+
     @Test
     public void testAdjacency() {
         setUp();
@@ -157,13 +159,14 @@ public final class Graph1LTests {
         Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6);
 
         this.connectVertices(5, 6);
-        
+
         Set<Integer> v1 = qExpected.get(5);
         Set<Integer> v2 = qExpected.get(6);
 
         q.connect(5, 6);
-        
+
         tearDown();
+        System.out.println("testAdjacency() took " + duration() + " sec(s).");
         assertTrue(v1.contains(6));
         assertTrue(v2.contains(5));
         assertTrue(q.isAdjacent(5, 6));
@@ -177,20 +180,77 @@ public final class Graph1LTests {
 
         this.connectVertices(5, 6);
         q.connect(5, 6);
-        
-        q.remove(6);
-        Set<Integer> valSet = qExpected.remove(6);
-       
-        
+
+        int remove = 6;
+
+        q.remove(remove);
+        Set<Integer> valSet = qExpected.remove(remove);
+
+        for (Integer x : valSet) {
+            if (qExpected.containsKey(x)) {
+                qExpected.get(x).remove(remove);
+            }
+        }
+
         tearDown();
+        System.out.println(
+                "testRemoveLeavingOne() took " + duration() + " sec(s).");
         assertEquals(qExpected, q.getRep());
     }
-    
+
     @Test
-    public void testTemplate() {
+    public void testMultiRelation() {
         setUp();
         Graph<Integer> q = new Graph1L<>();
-        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest();
+        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6, 7,
+                8);
+
+        q.add(5);
+        q.add(6);
+        q.add(7);
+
+        Set<Integer> vertices = new HashSet<>();
+        vertices.add(5);
+        vertices.add(6);
+        vertices.add(7);
+
+        q.add(vertices, 8);
+
+        this.connectVertices(8, 5);
+        this.connectVertices(8, 6);
+        this.connectVertices(8, 7);
+
         tearDown();
+        System.out
+                .println("testMultiRelation() took " + duration() + " sec(s).");
+        assertEquals(qExpected, q.getRep());
     }
+
+    @Test
+    public void testRemove() {
+        setUp();
+        Graph<Integer> q = this.createVerticesFromArgs(5, 6);
+        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6);
+
+        this.connectVertices(5, 6);
+        q.connect(5, 6);
+
+        g.get(5).remove(6);
+        g.get(6).remove(5);
+
+        q.disconnect(5, 6);
+
+        tearDown();
+        System.out.println("testRemove() took " + duration() + " sec(s).");
+        assertEquals(qExpected, q.getRep());
+    }
+
+//      --- TEST TEMPLATE BELOW ---
+//    @Test
+//    public void testTemplate() {
+//        setUp();
+//        Graph<Integer> q = new Graph1L<>();
+//        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest();
+//        tearDown();
+//    }
 }
