@@ -118,9 +118,19 @@ public class Graph1L<T> extends GraphSecondary<T> {
     }
 
     @Override
-    public T remove(T vertex) {
-        // TODO Auto-generated method stub
-        return null;
+    public boolean remove(T vertex) {
+    	assert (this.contains(vertex)) : "Violation of: vertex is in this";
+        boolean operation = false;
+    	
+    	Set<T> valSet = this.rep.remove(vertex);
+    	for(T v : valSet) {
+    		Set<T> innerValSet = this.rep.get(v);
+    		if(innerValSet.contains(vertex)) {
+    			operation = innerValSet.remove(vertex);
+    		}
+    	}
+    	
+    	return operation;
     }
 
     @Override

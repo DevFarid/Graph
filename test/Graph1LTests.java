@@ -170,6 +170,23 @@ public final class Graph1LTests {
     }
 
     @Test
+    public void testRemoveLeavingOne() {
+        setUp();
+        Graph<Integer> q = this.createVerticesFromArgs(5, 6);
+        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6);
+
+        this.connectVertices(5, 6);
+        q.connect(5, 6);
+        
+        q.remove(6);
+        Set<Integer> valSet = qExpected.remove(6);
+       
+        
+        tearDown();
+        assertEquals(qExpected, q.getRep());
+    }
+    
+    @Test
     public void testTemplate() {
         setUp();
         Graph<Integer> q = new Graph1L<>();
