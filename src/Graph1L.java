@@ -156,8 +156,7 @@ public class Graph1L<T> extends GraphSecondary<T> {
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-
+        this.createNewRep();
     }
 
     @Override
