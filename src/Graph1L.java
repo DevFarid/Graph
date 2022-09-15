@@ -154,6 +154,12 @@ public class Graph1L<T> extends GraphSecondary<T> {
         return this.rep.containsKey(vertex);
     }
 
+    public void toString() {
+        for (Map.Entry<T, Set<T>> node : this.rep.entrySet()) {
+            System.out.println("Node: " + node.getKey().toString() + " | " + node.getValue().toString());
+        }
+    }
+
     @Override
     public void clear() {
         this.createNewRep();
