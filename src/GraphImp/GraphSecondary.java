@@ -1,3 +1,6 @@
+package GraphImp;
+
+import GraphInterface.Graph;
 import java.util.Iterator;
 
 /**

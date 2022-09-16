@@ -1,7 +1,9 @@
+package GraphInterface;
+
 import java.util.Set;
 
 /**
- * Implementation of Graph.
+ * Implementation of Graph.Graph.
  *
  * @author Farid2k & R.E.M.O.
  *

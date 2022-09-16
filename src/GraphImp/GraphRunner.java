@@ -1,8 +1,10 @@
-package com.company;
+package GraphImp;
+
+import GraphInterface.Graph;
 
 import java.util.*;
 
-public class HardChallengeN {
+public class GraphRunner {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -19,9 +21,9 @@ public class HardChallengeN {
             for(String eachStrIndx : nextLine) {
                 castedStrings[counter] = Integer.parseInt(eachStrIndx);
                 counter++;
-                if(castedStrings.length < 1) {
-                  graph.add(castedStrings[0].);
-                } else {
+                if(castedStrings.length == 1) {
+                  graph.add(castedStrings[0]);
+                } else if(castedStrings.length > 1) {
                   
                 }
             }

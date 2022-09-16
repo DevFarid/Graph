@@ -1,3 +1,7 @@
+package GraphImp;
+
+import GraphInterface.Graph;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -7,7 +11,7 @@ import java.util.Set;
 
 /**
  *
- * s@author Farid2k & R.E.M.O
+ * @author Farid2k & R.E.M.O
  *
  * @param <T>
  */
@@ -154,10 +158,12 @@ public class Graph1L<T> extends GraphSecondary<T> {
         return this.rep.containsKey(vertex);
     }
 
-    public void toString() {
+    public String toString() {
+        String toString = "";
         for (Map.Entry<T, Set<T>> node : this.rep.entrySet()) {
-            System.out.println("Node: " + node.getKey().toString() + " | " + node.getValue().toString());
+            toString += "Node: " + node.getKey().toString() + " | " + node.getValue().toString();
         }
+        return toString;
     }
 
     @Override
