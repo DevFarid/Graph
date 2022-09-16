@@ -1,4 +1,6 @@
-import components.standard.Standard;
+package GraphInterface;
+
+import GraphStandard.Standard;
 
 /**
  * A graph, G = (V, E), is a finite set of vertices, V, and a finite set of

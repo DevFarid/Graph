@@ -1,5 +1,6 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import GraphImp.Graph1L;
+import GraphInterface.Graph;
+import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,9 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.junit.Test;
-
-import components.stopwatch.Stopwatch1;
+import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertEquals;
 
 /**
  * Sample JUnit test fixture for SequenceSmooth.
@@ -18,34 +18,7 @@ import components.stopwatch.Stopwatch1;
  *
  */
 public final class Graph1LTests {
-    /**
-     *
-     */
-    private static Stopwatch1 timer = new Stopwatch1();
     private static Map<Integer, Set<Integer>> g = new HashMap<>();
-
-    /**
-     *
-     */
-    private static void setUp() {
-        timer.start();
-    }
-
-    /**
-     *
-     */
-    private static void tearDown() {
-        timer.stop();
-    }
-
-    /**
-     *
-     * @return return the time duration of a test.
-     */
-    private static Double duration() {
-        double elapsed = timer.elapsed() / 1000.00;
-        return elapsed;
-    }
 
     /**
      * Constructs and returns a sequence of the integers provided as arguments.
@@ -120,7 +93,6 @@ public final class Graph1LTests {
         /*
          * Set up variables
          */
-        setUp();
         Graph<Integer> q = new Graph1L<>();
         Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5);
         /*
@@ -130,15 +102,12 @@ public final class Graph1LTests {
         /*
          * Assert that values of variables match expectations
          */
-        tearDown();
-        System.out.println("testAddEmpty() took " + duration() + " sec(s).");
         assertEquals(qExpected, q.getRep());
 
     }
 
     @Test
     public void testConnectEmpty() {
-        setUp();
         Graph<Integer> q = this.createVerticesFromArgs(5, 6);
         Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6);
 
@@ -146,15 +115,11 @@ public final class Graph1LTests {
 
         q.connect(5, 6);
 
-        tearDown();
-        System.out
-                .println("testConnectEmpty() took " + duration() + " sec(s).");
         assertEquals(qExpected, q.getRep());
     }
 
     @Test
     public void testAdjacency() {
-        setUp();
         Graph<Integer> q = this.createVerticesFromArgs(5, 6);
         Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6);
 
@@ -165,8 +130,6 @@ public final class Graph1LTests {
 
         q.connect(5, 6);
 
-        tearDown();
-        System.out.println("testAdjacency() took " + duration() + " sec(s).");
         assertTrue(v1.contains(6));
         assertTrue(v2.contains(5));
         assertTrue(q.isAdjacent(5, 6));
@@ -174,7 +137,6 @@ public final class Graph1LTests {
 
     @Test
     public void testRemoveLeavingOne() {
-        setUp();
         Graph<Integer> q = this.createVerticesFromArgs(5, 6);
         Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6);
 
@@ -192,15 +154,11 @@ public final class Graph1LTests {
             }
         }
 
-        tearDown();
-        System.out.println(
-                "testRemoveLeavingOne() took " + duration() + " sec(s).");
         assertEquals(qExpected, q.getRep());
     }
 
     @Test
     public void testMultiRelation() {
-        setUp();
         Graph<Integer> q = new Graph1L<>();
         Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6, 7,
                 8);
@@ -220,15 +178,11 @@ public final class Graph1LTests {
         this.connectVertices(8, 6);
         this.connectVertices(8, 7);
 
-        tearDown();
-        System.out
-                .println("testMultiRelation() took " + duration() + " sec(s).");
         assertEquals(qExpected, q.getRep());
     }
 
     @Test
     public void testRemove() {
-        setUp();
         Graph<Integer> q = this.createVerticesFromArgs(5, 6);
         Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest(5, 6);
 
@@ -240,8 +194,6 @@ public final class Graph1LTests {
 
         q.disconnect(5, 6);
 
-        tearDown();
-        System.out.println("testRemove() took " + duration() + " sec(s).");
         assertEquals(qExpected, q.getRep());
     }
 
@@ -249,7 +201,7 @@ public final class Graph1LTests {
 //    @Test
 //    public void testTemplate() {
 //        setUp();
-//        Graph<Integer> q = new Graph1L<>();
+//        Graph.Graph<Integer> q = new GraphImp.Graph1L<>();
 //        Map<Integer, Set<Integer>> qExpected = this.createFromArgsTest();
 //        tearDown();
 //    }
