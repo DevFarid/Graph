@@ -171,16 +171,25 @@ public class Graph1L<T> extends GraphSecondary<T> {
         this.createNewRep();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Graph<T> newInstance() {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            return this.getClass().getConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError("Cannot construct object of type" + this.getClass());
+        }
     }
 
     @Override
     public void transferFrom(Graph<T> source) {
-        // TODO Auto-generated method stub
+        assert source != null : "Violation of: source is not null";
+        assert source != this : "Violation of: source is not this";
+        assert source instanceof Graph1L<?> : "Violation of: source is of dynamic type Queue1L<?>";
 
+        Graph1L<T> localSource = (Graph1L<T>) source;
+        this.rep = localSource.rep;
+        localSource.createNewRep();
     }
 
     /**
