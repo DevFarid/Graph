@@ -54,6 +54,7 @@ public interface Graph<T> extends GraphKernel<T> {
     /**
      *
      * @return internal representation of class extending this.
+     * Only used for testing.
      */
     java.util.Map<T, Set<T>> getRep();
 

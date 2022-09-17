@@ -21,6 +21,11 @@ public class Graph1L<T> extends GraphSecondary<T> {
      */
     private java.util.Map<T, Set<T>> rep;
 
+    enum SEARCH_MODE {
+        DFS, BFS;
+    }
+
+
     /**
      * Empty constructor new representation.
      */
@@ -145,6 +150,15 @@ public class Graph1L<T> extends GraphSecondary<T> {
         }
 
         return operation;
+    }
+
+    /**
+     * Searches this {@code Graph1L} graph for {@code element} generic element, and returns the
+     * @param mode
+     * @return
+     */
+    T search(T element, SEARCH_MODE mode) {
+
     }
 
     @Override
